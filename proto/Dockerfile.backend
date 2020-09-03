@@ -1,0 +1,9 @@
+FROM clojure:lein
+RUN apt update
+RUN apt install -y build-essential protobuf-compiler
+# Install proto compiler for Clojure
+RUN git clone https://github.com/protojure/protoc-plugin.git
+WORKDIR protoc-plugin
+RUN make
+RUN cp target/protoc-gen-clojure /usr/local/bin
+

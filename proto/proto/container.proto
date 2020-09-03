@@ -1,0 +1,14 @@
+syntax = "proto3";
+package com.derrek.senior;
+
+message CreateRequest {
+  string name = 1;
+}
+
+message CreateResponse {
+  string response = 1;
+}
+
+service CreateService {
+  rpc Create(CreateRequest) returns (CreateResponse);
+}

@@ -1,8 +1,6 @@
 /**
  * @fileoverview
  * @enhanceable
- * @suppress {messageConventions} JS Compiler reports an error if a variable or
- *     field starts with 'MSG_' and isn't a translatable message.
  * @public
  */
 // GENERATED CODE -- DO NOT EDIT!
@@ -56,11 +54,10 @@ proto.com.derrek.senior.CreateRequest.prototype.toObject = function(opt_includeI
  *     http://goto/soy-param-migration
  * @param {!proto.com.derrek.senior.CreateRequest} msg The msg instance to transform.
  * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.com.derrek.senior.CreateRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    name: jspb.Message.getFieldWithDefault(msg, 1, "")
+    name: msg.getName()
   };
 
   if (includeInstance) {
@@ -111,26 +108,35 @@ proto.com.derrek.senior.CreateRequest.deserializeBinaryFromReader = function(msg
 
 
 /**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.com.derrek.senior.CreateRequest} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.com.derrek.senior.CreateRequest.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
 proto.com.derrek.senior.CreateRequest.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  proto.com.derrek.senior.CreateRequest.serializeBinaryToWriter(this, writer);
+  this.serializeBinaryToWriter(writer);
   return writer.getResultBuffer();
 };
 
 
 /**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.com.derrek.senior.CreateRequest} message
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
  * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.com.derrek.senior.CreateRequest.serializeBinaryToWriter = function(message, writer) {
+proto.com.derrek.senior.CreateRequest.prototype.serializeBinaryToWriter = function (writer) {
   var f = undefined;
-  f = message.getName();
+  f = this.getName();
   if (f.length > 0) {
     writer.writeString(
       1,
@@ -141,17 +147,26 @@ proto.com.derrek.senior.CreateRequest.serializeBinaryToWriter = function(message
 
 
 /**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.com.derrek.senior.CreateRequest} The clone.
+ */
+proto.com.derrek.senior.CreateRequest.prototype.cloneMessage = function() {
+  return /** @type {!proto.com.derrek.senior.CreateRequest} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
  * optional string name = 1;
  * @return {string}
  */
 proto.com.derrek.senior.CreateRequest.prototype.getName = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 1, ""));
 };
 
 
-/** @param {string} value */
+/** @param {string} value  */
 proto.com.derrek.senior.CreateRequest.prototype.setName = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
+  jspb.Message.setField(this, 1, value);
 };
 
 
@@ -198,11 +213,10 @@ proto.com.derrek.senior.CreateResponse.prototype.toObject = function(opt_include
  *     http://goto/soy-param-migration
  * @param {!proto.com.derrek.senior.CreateResponse} msg The msg instance to transform.
  * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.com.derrek.senior.CreateResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    response: jspb.Message.getFieldWithDefault(msg, 1, "")
+    response: msg.getResponse()
   };
 
   if (includeInstance) {
@@ -253,26 +267,35 @@ proto.com.derrek.senior.CreateResponse.deserializeBinaryFromReader = function(ms
 
 
 /**
+ * Class method variant: serializes the given message to binary data
+ * (in protobuf wire format), writing to the given BinaryWriter.
+ * @param {!proto.com.derrek.senior.CreateResponse} message
+ * @param {!jspb.BinaryWriter} writer
+ */
+proto.com.derrek.senior.CreateResponse.serializeBinaryToWriter = function(message, writer) {
+  message.serializeBinaryToWriter(writer);
+};
+
+
+/**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
 proto.com.derrek.senior.CreateResponse.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  proto.com.derrek.senior.CreateResponse.serializeBinaryToWriter(this, writer);
+  this.serializeBinaryToWriter(writer);
   return writer.getResultBuffer();
 };
 
 
 /**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.com.derrek.senior.CreateResponse} message
+ * Serializes the message to binary data (in protobuf wire format),
+ * writing to the given BinaryWriter.
  * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.com.derrek.senior.CreateResponse.serializeBinaryToWriter = function(message, writer) {
+proto.com.derrek.senior.CreateResponse.prototype.serializeBinaryToWriter = function (writer) {
   var f = undefined;
-  f = message.getResponse();
+  f = this.getResponse();
   if (f.length > 0) {
     writer.writeString(
       1,
@@ -283,17 +306,26 @@ proto.com.derrek.senior.CreateResponse.serializeBinaryToWriter = function(messag
 
 
 /**
+ * Creates a deep clone of this proto. No data is shared with the original.
+ * @return {!proto.com.derrek.senior.CreateResponse} The clone.
+ */
+proto.com.derrek.senior.CreateResponse.prototype.cloneMessage = function() {
+  return /** @type {!proto.com.derrek.senior.CreateResponse} */ (jspb.Message.cloneMessage(this));
+};
+
+
+/**
  * optional string response = 1;
  * @return {string}
  */
 proto.com.derrek.senior.CreateResponse.prototype.getResponse = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+  return /** @type {string} */ (jspb.Message.getFieldProto3(this, 1, ""));
 };
 
 
-/** @param {string} value */
+/** @param {string} value  */
 proto.com.derrek.senior.CreateResponse.prototype.setResponse = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
+  jspb.Message.setField(this, 1, value);
 };
 
 

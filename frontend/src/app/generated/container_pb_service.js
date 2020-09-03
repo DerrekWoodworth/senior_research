@@ -42,8 +42,6 @@ CreateServiceClient.prototype.create = function create(requestMessage, metadata,
           var err = new Error(response.statusMessage);
           err.code = response.status;
           err.metadata = response.trailers;
-          console.log("ERRORRRRRRRRRRRRRRRRR");
-          console.log(err);
           callback(err, null);
         } else {
           callback(null, response.message);
