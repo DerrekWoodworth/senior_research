@@ -4,8 +4,10 @@
 
 # This script is to be run by the proto-image to handle all the codegen for the proto files
 
+echo Building backend using protoc...
 # Backend codegen
-protoc --clojure_out=grpc-server:../backend/src --proto_path=../backend/resources ../backend/resources/container.proto
+protoc --clojure_out=grpc-server:backend/src --proto_path=backend/resources backend/resources/container.proto
 
+echo Building frontend using protoc...
 # Frontend codegen
-protoc --plugin=protoc-gen-ts=../frontend/node_modules/.bin/protoc-gen-ts --js_out="import_style=commonjs,binary:../frontend/src/app/generated" --ts_out="service=grpc-web:../frontend/src/app/generated" --proto_path ../frontend/proto/ container.proto
+protoc --plugin=protoc-gen-ts=frontend/node_modules/.bin/protoc-gen-ts --js_out="import_style=commonjs,binary:frontend/src/app/generated" --ts_out="service=grpc-web:frontend/src/app/generated" --proto_path frontend/proto/ container.proto

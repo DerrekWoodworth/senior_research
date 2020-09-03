@@ -5,4 +5,4 @@
 # Build docker image to run the protoc in
 docker build -t protoc-image .
 
-docker run --rm  -v  $PWD/:/root/ protoc-image
+docker run --rm  -v $PWD/:/root/senior_research protoc-image /bin/bash -c "cd /root/senior_research; ./codgen.sh"
