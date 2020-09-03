@@ -6,5 +6,5 @@
 
 echo Building backend using protoc...
 # Backend codegen
-protoc --clojure_out=grpc-server:../backend/src --proto_path=../backend/resources ../backend/resources/container.proto
+protoc --clojure_out=grpc-server:../backend/src --proto_path=proto/ proto/container.proto
 

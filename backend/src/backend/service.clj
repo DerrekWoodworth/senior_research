@@ -81,6 +81,7 @@
               ;; chain-providers from pedestal.
               ::http/type protojure.pedestal/config
               ::http/chain-provider protojure.pedestal/provider
+              ::http/host "0.0.0.0"
 
               ;;::http/host "localhost"
               ::http/port 8080})
