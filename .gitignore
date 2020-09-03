@@ -1,0 +1,5 @@
+# Ignore build artifacts from the backend
+backend/target/
+
+# Ignore dependencies in the frontend
+frontend/node_modules/
