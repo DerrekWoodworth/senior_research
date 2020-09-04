@@ -6,7 +6,7 @@ message CreateRequest {
 }
 
 message CreateResponse {
-  string response = 1;
+  string value= 1;
 }
 
 service CreateService {
