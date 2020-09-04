@@ -12,3 +12,6 @@ pom.xml.asc
 .lein-failures
 .nrepl-port
 .cpcache/
+
+# Don't include the codegen proto code
+src/com/derrek/
