@@ -50,7 +50,7 @@
     [this {{:keys [name]} :grpc-params :as request}]
     (println (str "Creating " name))
     {:status 200
-     :body {:response (str "YAY IT WORKS" name)}}))
+     :body {:value (str "Message from the backend " name)}}))
 
 ;; Defines "/" and "/about" routes with their associated :get handlers.
 ;; The interceptors defined after the verb map (e.g., {:get home-page}

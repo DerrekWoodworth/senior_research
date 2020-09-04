@@ -21,7 +21,7 @@ export class ContainerService {
       this.client.create(req, (err, response) => {
         console.log("Responseeeeeeee")
 	console.log(response)
-        observer.next(response.getResponse())
+        observer.next(response.getValue())
       })
     }) 
     
