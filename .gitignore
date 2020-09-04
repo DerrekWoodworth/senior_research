@@ -3,3 +3,6 @@ backend/target/
 
 # Ignore dependencies in the frontend
 frontend/node_modules/
+
+# Custom development handling
+running/
