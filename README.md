@@ -1,6 +1,6 @@
 ## Senior Research
 
-TPaaS Teach Pentesting as a Service. TPaas is a service for a professors to create Cyber Ranges for their students to learn Cyber Security through offensive methods.
+Jace, the Teaching Pentesting as a Service tool. Jace is a service for a professors to create Cyber Ranges for their students to learn Cyber Security through offensive methods.
 
 ## Dr. Plante
 I have dockerized every component. You should be able to run this on your local machine. There is **no** integration with Kubernetes. 
