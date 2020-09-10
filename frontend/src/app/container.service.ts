@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { CreateServiceClient } from './generated/container_pb_service';
 import { CreateRequest } from './generated/container_pb';
 import { Observable } from 'rxjs';
+import { environment } from '../environments/environment';
 
 
 @Injectable({
@@ -11,7 +12,7 @@ export class ContainerService {
   client: CreateServiceClient
 
   constructor() {
-    this.client = new CreateServiceClient('http://localhost:8082')
+    this.client = new CreateServiceClient(environment.url)
    }
 
    createContainer(name): Observable<string> {

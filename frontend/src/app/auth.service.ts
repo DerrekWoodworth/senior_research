@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LoginClient } from './generated/login_pb_service';
 import { LoginRequest } from './generated/login_pb';
+import { environment } from  '../environments/environment';
+// import { AuthInterceptor } from './authinterceptor';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +12,15 @@ export class AuthService {
   client:  LoginClient
 
   constructor() { 
-    this.client = new LoginClient('http://192.168.1.138:8082')
+    console.log("URL: " + environment.url)
+    const authInterceptor = new AuthInterceptor("testToken")
+    //let options = {
+
+    //unaryInterceptors: [authInterceptor],
+    //streamInterceptors: [authInterceptor]
+    //}
+
+    this.client = new LoginClient(environment.url) //, null, options)
     }
 
     login(email,password): Observable<string> {
