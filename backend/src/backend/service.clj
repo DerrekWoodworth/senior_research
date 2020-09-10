@@ -59,7 +59,7 @@
     [this {{:keys [email password]} :grpc-params :as request}]
     (println (str "Login attempt Email: " email ", password" password))
     {:status 200
-     :body {:jwt (str "JWT")}}))
+     :body {:jwt (str "JWT: " email " " password "and also " (get-in request [:headers "authorization"]))}}))
 
 ;; Defines "/" and "/about" routes with their associated :get handlers.
 ;; The interceptors defined after the verb map (e.g., {:get home-page}

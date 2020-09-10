@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LoginClient } from './generated/login_pb_service';
+import { LoginClient } from './generated/login_grpc_web_pb';
 import { LoginRequest } from './generated/login_pb';
 import { environment } from  '../environments/environment';
-// import { AuthInterceptor } from './authinterceptor';
+ import { AuthInterceptor } from './authinterceptor';
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +14,13 @@ export class AuthService {
   constructor() { 
     console.log("URL: " + environment.url)
     const authInterceptor = new AuthInterceptor("testToken")
-    //let options = {
+    let options = {
 
-    //unaryInterceptors: [authInterceptor],
-    //streamInterceptors: [authInterceptor]
-    //}
+    unaryInterceptors: [authInterceptor],
+    streamInterceptors: [authInterceptor]
+    }
 
-    this.client = new LoginClient(environment.url) //, null, options)
+    this.client = new LoginClient(environment.url, null, options)
     }
 
     login(email,password): Observable<string> {

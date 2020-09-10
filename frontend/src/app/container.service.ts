@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CreateServiceClient } from './generated/container_pb_service';
+import { CreateServiceClient } from './generated/container_grpc_web_pb';
 import { CreateRequest } from './generated/container_pb';
 import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
