@@ -40,7 +40,6 @@
   [& args]
   (println "\nCreating your server...")
   (-> service/service
-      (merge {::server/allowed-origins {:creds true :allowed-origins (constantly true)}})
       (server/create-server)
   (server/start)))
 

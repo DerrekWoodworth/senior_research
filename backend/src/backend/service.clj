@@ -9,6 +9,7 @@
             [protojure.pedestal.routes :as proutes]
             [com.example.addressbook.Greeter.server :as greeter]
             [com.derrek.senior.CreateService.server :as creater]
+            [com.derrek.senior.Login.server :as login]
             [com.example.addressbook :as addressbook]))
 
 (defn about-page
@@ -52,6 +53,14 @@
     {:status 200
      :body {:value (str "Message from the backend " name)}}))
 
+(deftype Login []
+  login/Service
+  (Login
+    [this {{:keys [email password]} :grpc-params :as request}]
+    (println (str "Login attempt Email: " email ", password" password))
+    {:status 200
+     :body {:jwt (str "JWT")}}))
+
 ;; Defines "/" and "/about" routes with their associated :get handlers.
 ;; The interceptors defined after the verb map (e.g., {:get home-page}
 ;; apply to / and its children (/about).
@@ -67,6 +76,7 @@
 ;; Add the routes produced by Greeter->routes
 (def grpc-routes (-> routes 
                      (reduce-conj (proutes/->tablesyntax {:rpc-metadata greeter/rpc-metadata :interceptors common-interceptors :callback-context (Greeter.)}))
+                     (reduce-conj (proutes/->tablesyntax {:rpc-metadata login/rpc-metadata :interceptors common-interceptors :callback-context (Login.)}))
                      (reduce-conj (proutes/->tablesyntax {:rpc-metadata creater/rpc-metadata :interceptors common-interceptors :callback-context (Creater.)}))))
 
 (println grpc-routes)
@@ -81,7 +91,7 @@
               ;; chain-providers from pedestal.
               ::http/type protojure.pedestal/config
               ::http/chain-provider protojure.pedestal/provider
+              ::http/allowed-origins ["*"]
               ::http/host "0.0.0.0"
-
               ;;::http/host "localhost"
               ::http/port 8080})
