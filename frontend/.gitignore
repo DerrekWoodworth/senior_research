@@ -46,5 +46,5 @@ testem.log
 Thumbs.db
 
 # Code gen code
-src/app/generated/
+src/app/generated/*
 
