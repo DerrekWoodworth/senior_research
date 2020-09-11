@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LoginClient } from './generated/login_grpc_web_pb';
+import { LoginClient } from './generated/LoginServiceClientPb';
 import { LoginRequest } from './generated/login_pb';
 import { environment } from  '../environments/environment';
  import { AuthInterceptor } from './authinterceptor';
@@ -27,8 +27,9 @@ export class AuthService {
       return Observable.create((observer) => {
         const req = new LoginRequest();
         req.setEmail(email)
+	const metadata = {'custom-header-1': 'value1'}
 	req.setPassword(password)
-	this.client.login(req, (err, res) => {
+	this.client.login(req, metadata, (err, res) => {
 	  console.log("Got a response for logging in")
 	  console.log(err)
 	  console.log(res)
