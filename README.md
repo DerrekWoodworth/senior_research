@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <img src="docs/Jace_logo_v3.png" width="200"></a>
+  <img src="docs/Jace_logo_v4.png" width="200"></a>
   <br>
   Jace
   <br>
