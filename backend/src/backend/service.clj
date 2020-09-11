@@ -10,7 +10,11 @@
             [com.example.addressbook.Greeter.server :as greeter]
             [com.derrek.senior.CreateService.server :as creater]
             [com.derrek.senior.Login.server :as login]
-            [com.example.addressbook :as addressbook]))
+            [com.example.addressbook :as addressbook]
+            
+            ;; Need to factor out business logic :/
+            [jace.auth :as auth]
+            ))
 
 (defn about-page
   [request]
@@ -59,7 +63,8 @@
     [this {{:keys [email password]} :grpc-params :as request}]
     (println (str "Login attempt Email: " email ", password" password))
     {:status 200
-     :body {:jwt (str "JWT: " email " " password "and also " (get-in request [:headers "authorization"]))}}))
+     :body {:jwt (auth/authenticate email password)}}))
+     ;;:body {:jwt (str "JWT: " email " " password "and also " (get-in request [:headers "authorization"]))}}))
 
 ;; Defines "/" and "/about" routes with their associated :get handlers.
 ;; The interceptors defined after the verb map (e.g., {:get home-page}

@@ -21,11 +21,10 @@ export class LoginComponent implements OnInit {
 
   login() {
     const val = this.form.value;
-    console.log(val)
-    console.log("Clicked log in")
+    //console.log(val)
+    //console.log("Clicked log in")
     this.authService.login(val.email,val.password).subscribe((res) => {
-      console.log("Response")
-      console.log(res)
+      // This is the boolean returned if it is false handle displaying false info
       })
   }
 

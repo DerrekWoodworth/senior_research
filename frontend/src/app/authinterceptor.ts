@@ -1,13 +1,12 @@
 export class AuthInterceptor {
-  token: string
 
-  constructor(token: string) {
-    this.token = token
+  constructor() {
   }
 
   intercept(request: any, invoker: any) {
     const metadata = request.getMetadata()
-    metadata.Authorization = 'Bearer ' + this.token
+    const jwt = localStorage.getItem('jwt')
+    metadata.Authorization = 'Bearer ' + jwt
     return invoker(request)
   }
 }

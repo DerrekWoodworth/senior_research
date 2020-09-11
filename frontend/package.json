@@ -23,6 +23,7 @@
     "google-protobuf": "^3.13.0",
     "grpc": "^1.24.3",
     "grpc-web": "^1.2.1",
+    "jwt-decode": "^3.0.0-beta.2",
     "protoc": "^1.0.4",
     "rxjs": "~6.5.5",
     "ts-protoc-gen": "^0.12.0",
