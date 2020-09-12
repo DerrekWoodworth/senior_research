@@ -61,10 +61,16 @@
   login/Service
   (Login
     [this {{:keys [email password]} :grpc-params :as request}]
-    (println (str "Login attempt Email: " email ", password" password))
+    (do
+      (println (str "Login attempt " request))
+      (println (str "This " this))
+      (flush))
     {:status 200
      :body {:jwt (auth/authenticate email password)}}))
      ;;:body {:jwt (str "JWT: " email " " password "and also " (get-in request [:headers "authorization"]))}}))
+
+
+;; Define intercetor to validate JWT then attach the appropriate user to needs to deny the request
 
 ;; Defines "/" and "/about" routes with their associated :get handlers.
 ;; The interceptors defined after the verb map (e.g., {:get home-page}
@@ -75,10 +81,12 @@
 (def routes #{["/" :get (conj common-interceptors `home-page)]
               ["/about" :get (conj common-interceptors `about-page)]})
 
-(defn reduce-conj [x y ]
+;; Helper function because its easier
+(defn reduce-conj [x y]
   (reduce conj x y))
-;; -- PROTOC-GEN-CLOJURE --
-;; Add the routes produced by Greeter->routes
+
+;; Add all the grpc endpoints, with authentication interceptor
+;; Will move into appropriate ns when it gets bigger
 (def grpc-routes (-> routes 
                      (reduce-conj (proutes/->tablesyntax {:rpc-metadata greeter/rpc-metadata :interceptors common-interceptors :callback-context (Greeter.)}))
                      (reduce-conj (proutes/->tablesyntax {:rpc-metadata login/rpc-metadata :interceptors common-interceptors :callback-context (Login.)}))
