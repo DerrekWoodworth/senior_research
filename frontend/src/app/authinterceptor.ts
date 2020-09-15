@@ -6,7 +6,7 @@ export class AuthInterceptor {
   intercept(request: any, invoker: any) {
     const metadata = request.getMetadata()
     const jwt = localStorage.getItem('jwt')
-    metadata.Authorization = 'Bearer ' + jwt
+    metadata.Authorization = jwt
     console.log("Added authorization to request")
     return invoker(request)
   }

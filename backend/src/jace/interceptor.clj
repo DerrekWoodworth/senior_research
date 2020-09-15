@@ -1,4 +1,6 @@
-(ns jace.interceptor)
+(ns jace.interceptor
+  "Handles the interceptors for authentication and authroization"
+  :require [io.pedestal.interceptor.chain :as chain])
 
 ;; Statically define grpc end points and their permissions
 
@@ -8,7 +10,7 @@
 (def route-roles
   {
    ;; Example but should be implemented
-   "/com.derrek.senior.Container/Create" "professor"
+   "/com.derrek.senior.CreateService/Container" "professor"
   })
 
 ;; Authentication and Authorize Interceptor
@@ -24,8 +26,16 @@
          ;; make sure jwt is valid
          (if-let [userJwt (auth/validate jwt)]
            ;; check jwt role with route role
-           (let [requiredRole (get route-roles (:path-;;info ctx))]))
+           (let [requiredRole (get route-roles (:path-info ctx))]
+             (if (= (:role userJwt) requiredRole)
+               ;; Successful authentication and permisions
+               (assoc ctx :user userJwt)
+               ;; Not proper permission
+               (chain/terminate (assoc ctx
+                                 :reponse {:status 403
+                                           :body "Not Authorized"})))))
          ;; There was no jwt on the request
-         (throw (Exception. "Not authenticated")))))})
+         (chain/terminate (assoc ctx
+                                 :reponse {:status 401
+                                           :body "Not Authenticated"})))))})
 
-;; Need to have an error catching interceptor to return 403

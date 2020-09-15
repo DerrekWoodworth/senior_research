@@ -53,7 +53,7 @@
   creater/Service
   (Create
     [this {{:keys [name]} :grpc-params :as request}]
-    (println (str "Creating " name))
+    (println "Creater" request)
     {:status 200
      :body {:value (str "Message from the backend " name)}}))
 
@@ -61,10 +61,6 @@
   login/Service
   (Login
     [this {{:keys [email password]} :grpc-params :as request}]
-    (do
-      (println (str "Login attempt " request))
-      (println (str "This " this))
-      (flush))
     {:status 200
      :body {:jwt (auth/authenticate email password)}}))
      ;;:body {:jwt (str "JWT: " email " " password "and also " (get-in request [:headers "authorization"]))}}))

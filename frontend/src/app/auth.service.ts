@@ -40,6 +40,7 @@ export class AuthService {
           if (role == 'student') {
             this.router.navigate(['student-home'])
           } else {
+            this.router.navigate(['create-container'])
             console.log("Need to direct you to the professor componenet")
           }
           observer.next(true)
