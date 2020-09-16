@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { ContainerComponent } from './container/container.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './student/home/home.component';
+import { AddScenarioComponent } from './add-scenario/add-scenario.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ContainerComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    AddScenarioComponent
   ],
   imports: [
     BrowserModule,

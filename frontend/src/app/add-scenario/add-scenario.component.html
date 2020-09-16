@@ -1,0 +1,20 @@
+<form [formGroup]="form">
+    <fieldset>
+        <legend>Add Scenario</legend>
+        <div class="form-field">
+            <label>Name:</label>
+            <input name="name" formControlName="name">
+        </div>
+        <div class="form-field">
+            <label>Description:</label>
+            <input name="description" formControlName="description">
+        </div>
+        <div class="form-field">
+            <label>Dockerfile Code:</label>
+            <input name="code" formControlName="code">
+        </div>
+    </fieldset>
+    <div class="form-buttons">
+        <button class="button button-primary" (click)="addScenario()">Add new Scenario</button>
+    </div>
+</form>

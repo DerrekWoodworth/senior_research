@@ -21,8 +21,6 @@ export class LoginComponent implements OnInit {
 
   login() {
     const val = this.form.value;
-    //console.log(val)
-    //console.log("Clicked log in")
     this.authService.login(val.email,val.password).subscribe((res) => {
       // This is the boolean returned if it is false handle displaying false info
       })
