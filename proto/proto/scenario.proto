@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package com.derrek.senior;
+
+message Scenario {
+  string guid = 1;
+  string name = 2;
+  string description = 3;
+  string initcode = 4;
+}
+
+message CreateScenarioRequest {
+  // Without GUID
+  Scenario scenario = 1;
+}
+
+message CreateScenarioResponse {
+  // With GUID
+  Scenario scenario = 1;
+  bool error = 2;
+  string message = 3;
+
+}
+
+message ListScenarioRequest {
+  string searchTerm = 1;
+}
+
+message ListScenarioResponse {
+  repeated Scenario scenario = 1;
+}
+
+service Scenarios {
+  rpc Create(CreateScenarioRequest) returns (CreateScenarioResponse);
+  rpc List(ListScenarioRequest) returns (ListScenarioResponse);
+}

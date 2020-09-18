@@ -11,6 +11,7 @@
             [com.derrek.senior.CreateService.server :as creater]
             [com.derrek.senior.Login.server :as login]
             [com.example.addressbook :as addressbook]
+            [com.derrek.senior.Scenarios.server :as scenarios]
             
             ;; Need to factor out business logic :/
             [jace.auth :as auth]
@@ -63,8 +64,16 @@
     [this {{:keys [email password]} :grpc-params :as request}]
     {:status 200
      :body {:jwt (auth/authenticate email password)}}))
-     ;;:body {:jwt (str "JWT: " email " " password "and also " (get-in request [:headers "authorization"]))}}))
 
+(deftype AddScenario []
+  scenarios/Service
+  (Create
+    [this {{:keys [scenario]} :grpc-params :as request}]
+    (do
+      (println "Scenario" scenario)
+      (flush)
+      {:status 200
+       :body {:scenario scenario}})))
 
 ;; Define intercetor to validate JWT then attach the appropriate user to needs to deny the request
 
@@ -86,6 +95,7 @@
 (def grpc-routes (-> routes 
                      (reduce-conj (proutes/->tablesyntax {:rpc-metadata greeter/rpc-metadata :interceptors common-interceptors :callback-context (Greeter.)}))
                      (reduce-conj (proutes/->tablesyntax {:rpc-metadata login/rpc-metadata :interceptors common-interceptors :callback-context (Login.)}))
+                     (reduce-conj (proutes/->tablesyntax {:rpc-metadata scenarios/rpc-metadata :interceptors common-interceptors :callback-context (AddScenario.)}))
                      (reduce-conj (proutes/->tablesyntax {:rpc-metadata creater/rpc-metadata :interceptors common-interceptors :callback-context (Creater.)}))))
 
 (println grpc-routes)

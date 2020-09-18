@@ -18,3 +18,12 @@
         <button class="button button-primary" (click)="addScenario()">Add new Scenario</button>
     </div>
 </form>
+<h2>Added Scenarios</h2>
+<ul>
+    <li *ngFor="let scenario of scenarios">
+        <h4>{{ scenario.getName() }}</h4>
+        <p>{{ scenario.getDescription() }}</p>
+        <p>{{ scenario.getInitcode() }}</p>
+        <p>{{ scenario.getGuid() }}</p>
+    </li>
+</ul>
