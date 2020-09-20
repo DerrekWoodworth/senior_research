@@ -36,6 +36,8 @@
                  [buddy "2.0.0"]
                  ;; Database
                  [com.datomic/datomic-free "0.9.5697"]
+                 ;; Kubernetes 
+                 [io.kubernetes/client-java "9.0.2"]
                  ]
 
   :min-lein-version "2.0.0"
