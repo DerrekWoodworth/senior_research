@@ -2,7 +2,8 @@
   (:import [io.kubernetes.client.openapi ApiClient ApiException Configuration]
            [io.kubernetes.client.openapi.apis CoreV1Api]
            [io.kubernetes.client.openapi.models V1Pod V1PodList V1PersistentVolumeClaim V1PersistentVolumeClaimSpec V1ResourceRequirements]
-           [io.kubernetes.client.util Config]))
+           [io.kubernetes.client.util Config]
+           [jace kubernetes]))
 
 
 ;; Set the default config for our client to use
@@ -28,3 +29,8 @@
                  (.resources (-> (V1ResourceRequirements.)
                                 (.limits (-> {}
                                          (assoc "storage" "3Gi")))))))))
+
+(defn alsoGetSpec
+  "Get a pvc request with the param size"
+  [size]
+  (kubernetes/createPVCSpec size))
