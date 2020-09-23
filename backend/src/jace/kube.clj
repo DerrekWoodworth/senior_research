@@ -3,15 +3,15 @@
            [io.kubernetes.client.openapi.apis CoreV1Api]
            [io.kubernetes.client.openapi.models V1Pod V1PodList V1PersistentVolumeClaim V1PersistentVolumeClaimSpec V1ResourceRequirements]
            [io.kubernetes.client.util Config]
-           [jace kubernetes]))
+           [derrek Kubernetes]))
 
 
 ;; Set the default config for our client to use
-(Configuration/setDefaultApiClient (Config/defaultClient))
+;(Configuration/setDefaultApiClient (Config/defaultClient))
 
-(println "Creating api")
+;(println "Creating api")
 ;; Define the api to interact with the cluster
-(def api (CoreV1Api.))
+;(def api (CoreV1Api.))
 
 ;(println "Getting pods")
 ;; Java interopt method class, method takes 9 nulls... yikes
@@ -33,4 +33,8 @@
 (defn alsoGetSpec
   "Get a pvc request with the param size"
   [size]
-  (kubernetes/createPVCSpec size))
+  (Kubernetes/createPVCSpec size))
+(def pvc-test (Kubernetes/createPVCSpec "1Gi"))
+(Kubernetes/setApis)
+;;(def result (Kubernetes/createPVCInCluster pvc-test))
+(Kubernetes/createContainer (Kubernetes/createContainerSpec "scenario-1"))
