@@ -15,3 +15,7 @@ pom.xml.asc
 
 # Don't include the codegen proto code
 src/com/derrek/
+
+# Don't include ide files
+.idea/
+backend.iml
