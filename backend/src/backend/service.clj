@@ -12,8 +12,8 @@
             [com.derrek.senior.Login.server :as login]
             [com.example.addressbook :as addressbook]
             [com.derrek.senior.Scenarios.server :as scenarios]
+            [com.derrek.senior.File.server :as files]
             
-            ;; Need to factor out business logic :/
             [jace.auth :as auth]
             ))
 
@@ -74,6 +74,17 @@
       (flush)
       {:status 200
        :body {:scenario scenario}})))
+
+(deftype Upload []
+  file/service
+  (Upload
+    [this {{:keys [name chunks]} :grpc-params :as request}]
+    (do
+      ; Append the data to filename
+      (spit name (.toStringUtf8 chunks))
+      {:status 200
+       :body {:message "did upload part"}})))
+
 
 ;; Define intercetor to validate JWT then attach the appropriate user to needs to deny the request
 
