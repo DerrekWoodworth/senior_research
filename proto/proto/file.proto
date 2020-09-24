@@ -2,7 +2,7 @@ syntax = "proto3";
 package com.derrek.senior;
 
 message Chunk {
-  string name = 1;
+  string filename = 1;
   bytes content = 2;
 }
 
