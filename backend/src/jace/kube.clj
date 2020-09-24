@@ -14,7 +14,10 @@
 (Kubernetes/createPVCInCluster (Kubernetes/createPVCSpec "scenario-2" "3Gi"))
 
 ;; Create the init contianer with the name of the pvc
-(Kubernetes/createInitPod (Kubernetes/initPVCPod "scenario-2" "initpod"))
+(println "Creating init pod")
+(println (Kubernetes/createInitPod (Kubernetes/initPVCPod "scenario-2" "initpod")))
+
 
 ;; Now copy the file to the pvc
+(println "Copying file")
 (Kubernetes/copyFileToPVC "base64_name.tar" "scenario-2" "initpod")

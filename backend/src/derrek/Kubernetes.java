@@ -62,13 +62,23 @@ public class Kubernetes {
       .withName(podname)
       .endMetadata()
       .withNewSpec()
+      .addNewVolume()
+      .withName("startup")
+      .withNewPersistentVolumeClaim()
+      .withClaimName(pvcName)
+      .endPersistentVolumeClaim()
+      .endVolume()
       .addNewContainer()
       .withName("container")
       .withImage("ubuntu")
+      .addNewVolumeMount()
+      .withName("startup")
+      .withMountPath("/startup")
+      .endVolumeMount()
       .withCommand(List.of(
         "/bin/bash",
         "-c",
-        "sleep 60; tar -xvf /downloaded.tar -C /startup; sleep 36000"
+        "sleep 10; tar -xvf /downloaded.tar -C /startup; sleep 36000"
       ))
       .endContainer()
       .endSpec()
