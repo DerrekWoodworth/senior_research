@@ -26,7 +26,7 @@ public class Kubernetes {
   private static AppsV1Api appsV1Api;
   private static Copy copy;
 
-  public static void setApis() throws IOException {
+  public static void setApis() throws IOException, ApiException {
     Configuration.setDefaultApiClient(Config.defaultClient().setDebugging(true));
     coreV1Api = new CoreV1Api();
     appsV1Api = new AppsV1Api();
@@ -47,14 +47,14 @@ public class Kubernetes {
       .build();
   }
 
-  public static void copyFileToPVC(String filepath, String pvcName, String podname) {
+  public static void copyFileToPVC(String filepath, String pvcName, String podname) throws ApiException, IOException {
     copy.copyFileToPod("default", podname, "container",
       // From
       Path.of(filepath),
       // To
-      Path.of("/downloaded.tar"){
-    });
-  })
+      Path.of("/downloaded.tar")
+    );
+  }
 
   public static V1Pod initPVCPod(String pvcName, String podname) {
     return new V1PodBuilder()
@@ -68,7 +68,7 @@ public class Kubernetes {
       .withCommand(List.of(
         "/bin/bash",
         "-c",
-        "\"sleep 60; tar -xvf /downloaded.tar -C /startup; sleep 36000\""
+        "sleep 60; tar -xvf /downloaded.tar -C /startup; sleep 36000"
       ))
       .endContainer()
       .endSpec()

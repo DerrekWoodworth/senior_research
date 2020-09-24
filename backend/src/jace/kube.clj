@@ -4,15 +4,17 @@
            [io.kubernetes.client.openapi.models V1Pod V1PodList V1PersistentVolumeClaim V1PersistentVolumeClaimSpec V1ResourceRequirements]
            [io.kubernetes.client.util Config]
            [derrek Kubernetes]))
+
 (Kubernetes/setApis)
-;;(def result (Kubernetes/createPVCInCluster pvc-test))
-(Kubernetes/createContainer (Kubernetes/createContainerSpec "scenario-1"))
+
+;(Kubernetes/createContainer 
+;  (Kubernetes/createContainerSpec "scenario-2"))
 
 ; Example for creating Scenario
-(Kubernetes/createPVCInCluster (Kubernetes/createPVCSpec "scenario-1" "3Gi"))
+(Kubernetes/createPVCInCluster (Kubernetes/createPVCSpec "scenario-2" "3Gi"))
 
 ;; Create the init contianer with the name of the pvc
-(Kubernetes/createInitPod (Kubernetes/initPVCPod "scenario-1" "initpod"))
+(Kubernetes/createInitPod (Kubernetes/initPVCPod "scenario-2" "initpod"))
 
 ;; Now copy the file to the pvc
-(Kubernetes/copyFileToPVC "base64_name.tar" "scenario-1" "initpod")
+(Kubernetes/copyFileToPVC "base64_name.tar" "scenario-2" "initpod")
