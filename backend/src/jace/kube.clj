@@ -4,37 +4,15 @@
            [io.kubernetes.client.openapi.models V1Pod V1PodList V1PersistentVolumeClaim V1PersistentVolumeClaimSpec V1ResourceRequirements]
            [io.kubernetes.client.util Config]
            [derrek Kubernetes]))
-
-
-;; Set the default config for our client to use
-;(Configuration/setDefaultApiClient (Config/defaultClient))
-
-;(println "Creating api")
-;; Define the api to interact with the cluster
-;(def api (CoreV1Api.))
-
-;(println "Getting pods")
-;; Java interopt method class, method takes 9 nulls... yikes
-;(def pods (.listPodForAllNamespaces api nil nil nil nil nil nil nil nil nil))
-
-
-;(println pods)
-
-;; Create dymanic PVC
-(defn pvcSpec
-  "Create the spec for a PVC of requested size"
-  []
-  (-> (V1PersistentVolumeClaim.)
-      (.spec (-> (V1PersistentVolumeClaimSpec.)
-                 (.resources (-> (V1ResourceRequirements.)
-                                (.limits (-> {}
-                                         (assoc "storage" "3Gi")))))))))
-
-(defn alsoGetSpec
-  "Get a pvc request with the param size"
-  [size]
-  (Kubernetes/createPVCSpec size))
-(def pvc-test (Kubernetes/createPVCSpec "1Gi"))
 (Kubernetes/setApis)
 ;;(def result (Kubernetes/createPVCInCluster pvc-test))
 (Kubernetes/createContainer (Kubernetes/createContainerSpec "scenario-1"))
+
+; Example for creating Scenario
+(Kubernetes/createPVCInCluster (Kubernetes/createPVCSpec "scenario-1" "3Gi"))
+
+;; Create the init contianer with the name of the pvc
+(Kubernetes/createInitPod (Kubernetes/initPVCPod "scenario-1" "initpod"))
+
+;; Now copy the file to the pvc
+(Kubernetes/copyFileToPVC "base64_name.tar" "scenario-1" "initpod")

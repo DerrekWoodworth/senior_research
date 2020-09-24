@@ -1,5 +1,6 @@
 package derrek;
 
+import io.kubernetes.client.Copy;
 import io.kubernetes.client.custom.Quantity;
 import io.kubernetes.client.openapi.ApiClient;
 import io.kubernetes.client.openapi.ApiException;
@@ -10,6 +11,7 @@ import io.kubernetes.client.openapi.models.*;
 import io.kubernetes.client.util.Config;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
@@ -22,16 +24,18 @@ import java.util.Map;
 public class Kubernetes {
   private static CoreV1Api coreV1Api;
   private static AppsV1Api appsV1Api;
+  private static Copy copy;
 
   public static void setApis() throws IOException {
     Configuration.setDefaultApiClient(Config.defaultClient().setDebugging(true));
     coreV1Api = new CoreV1Api();
     appsV1Api = new AppsV1Api();
+    copy = new Copy();
   }
-  public static V1PersistentVolumeClaim createPVCSpec(String size) {
+  public static V1PersistentVolumeClaim createPVCSpec(String name, String size) {
     return new V1PersistentVolumeClaimBuilder()
       .withNewMetadata()
-      .withName("scenario-1")
+      .withName(name)
       .endMetadata()
       .withNewSpec()
       .withNewResources()
@@ -41,6 +45,38 @@ public class Kubernetes {
       .addNewAccessMode("ReadOnlyMany")
       .endSpec()
       .build();
+  }
+
+  public static void copyFileToPVC(String filepath, String pvcName, String podname) {
+    copy.copyFileToPod("default", podname, "container",
+      // From
+      Path.of(filepath),
+      // To
+      Path.of("/downloaded.tar"){
+    });
+  })
+
+  public static V1Pod initPVCPod(String pvcName, String podname) {
+    return new V1PodBuilder()
+      .withNewMetadata()
+      .withName(podname)
+      .endMetadata()
+      .withNewSpec()
+      .addNewContainer()
+      .withName("container")
+      .withImage("ubuntu")
+      .withCommand(List.of(
+        "/bin/bash",
+        "-c",
+        "\"sleep 60; tar -xvf /downloaded.tar -C /startup; sleep 36000\""
+      ))
+      .endContainer()
+      .endSpec()
+      .build();
+  }
+
+  public static V1Pod createInitPod(V1Pod pod) throws ApiException {
+  return coreV1Api.createNamespacedPod("default", pod, null, null, null);
   }
 
   /*
