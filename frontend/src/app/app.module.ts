@@ -20,6 +20,7 @@ import { AddScenarioComponent } from './add-scenario/add-scenario.component';
   imports: [
     BrowserModule,
     ReactiveFormsModule,
+    FormsModule,
     AppRoutingModule
   ],
   providers: [],

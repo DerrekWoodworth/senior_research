@@ -76,12 +76,14 @@
        :body {:scenario scenario}})))
 
 (deftype Upload []
-  file/service
+  files/Service
   (Upload
-    [this {{:keys [name chunks]} :grpc-params :as request}]
+    [this {{:keys [filename content]} :grpc-params :as request}]
     (do
       ; Append the data to filename
-      (spit name (.toStringUtf8 chunks))
+      (spit filename (String. content) :append true)
+      (println "Upload file")
+      (flush)
       {:status 200
        :body {:message "did upload part"}})))
 
@@ -107,9 +109,10 @@
                      (reduce-conj (proutes/->tablesyntax {:rpc-metadata greeter/rpc-metadata :interceptors common-interceptors :callback-context (Greeter.)}))
                      (reduce-conj (proutes/->tablesyntax {:rpc-metadata login/rpc-metadata :interceptors common-interceptors :callback-context (Login.)}))
                      (reduce-conj (proutes/->tablesyntax {:rpc-metadata scenarios/rpc-metadata :interceptors common-interceptors :callback-context (AddScenario.)}))
+                     (reduce-conj (proutes/->tablesyntax {:rpc-metadata files/rpc-metadata :interceptors common-interceptors :callback-context (Upload.)}))
                      (reduce-conj (proutes/->tablesyntax {:rpc-metadata creater/rpc-metadata :interceptors common-interceptors :callback-context (Creater.)}))))
 
-(println grpc-routes)
+;(println grpc-routes)
 (def service {:env :prod
               ::http/routes grpc-routes
 

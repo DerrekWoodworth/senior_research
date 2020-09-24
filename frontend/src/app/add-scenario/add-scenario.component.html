@@ -10,8 +10,8 @@
             <input name="description" formControlName="description">
         </div>
         <div class="form-field">
-            <label>Dockerfile Code:</label>
-            <input name="code" formControlName="code">
+            <label>File:</label>
+            <input type="file" name="currentInput" (change)="onFileSelected($event)">
         </div>
     </fieldset>
     <div class="form-buttons">
