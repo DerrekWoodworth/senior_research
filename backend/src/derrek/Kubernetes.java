@@ -1,6 +1,7 @@
 package derrek;
 
 import io.kubernetes.client.Copy;
+import io.kubernetes.client.Exec;
 import io.kubernetes.client.custom.Quantity;
 import io.kubernetes.client.openapi.ApiClient;
 import io.kubernetes.client.openapi.ApiException;
@@ -10,6 +11,7 @@ import io.kubernetes.client.openapi.apis.CoreV1Api;
 import io.kubernetes.client.openapi.models.*;
 import io.kubernetes.client.util.Config;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
@@ -48,15 +50,12 @@ public class Kubernetes {
   }
 
   public static void copyFileToPVC(String filepath, String pvcName, String podname) throws ApiException, IOException {
-    try {
-      copy.copyFileToPod("default", podname, "container", Path.of(filepath), Path.of("/downloaded.tar"));
-    } catch (ApiException e) {
-      System.out.println("ERROR");
-      e.printStackTrace();
-    } catch (IOException e) {
-      System.out.println("ERROR");
-      e.printStackTrace();
-    } 
+
+    Exec exec = new Exec();
+    String[] cantDoInlineDecleration = {"sh", "-c  | tar -xvf - -C /starup"};
+    Process process = exec.exec("default", podname, cantDoInlineDecleration, true);
+    new FileInputStream(filepath).transferTo(process.getOutputStream());
+
   }
 
   public static V1Pod initPVCPod(String pvcName, String podname) {
