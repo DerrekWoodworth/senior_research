@@ -48,12 +48,15 @@ public class Kubernetes {
   }
 
   public static void copyFileToPVC(String filepath, String pvcName, String podname) throws ApiException, IOException {
-    copy.copyFileToPod("default", podname, "container",
-      // From
-      Path.of(filepath),
-      // To
-      Path.of("/downloaded.tar")
-    );
+    try {
+      copy.copyFileToPod("default", podname, "container", Path.of(filepath), Path.of("/downloaded.tar"));
+    } catch (ApiException e) {
+      System.out.println("ERROR");
+      e.printStackTrace();
+    } catch (IOException e) {
+      System.out.println("ERROR");
+      e.printStackTrace();
+    } 
   }
 
   public static V1Pod initPVCPod(String pvcName, String podname) {

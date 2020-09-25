@@ -18,6 +18,10 @@
 (println (Kubernetes/createInitPod (Kubernetes/initPVCPod "scenario-2" "initpod")))
 
 
+;; These requests are async, need to wait for them to be created (Should watch resource, but will sleep for now)
+(println "Sleeping for 4 seconds")
+(Thread/sleep 4000)
+
 ;; Now copy the file to the pvc
 (println "Copying file")
-(Kubernetes/copyFileToPVC "base64_name.tar" "scenario-2" "initpod")
+(Kubernetes/copyFileToPVC "/tmp/base64_name.tar" "scenario-2" "initpod")
