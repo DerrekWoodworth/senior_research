@@ -1,5 +1,6 @@
 package derrek;
 
+import com.google.common.io.ByteStreams;
 import io.kubernetes.client.Copy;
 import io.kubernetes.client.Exec;
 import io.kubernetes.client.custom.Quantity;
@@ -54,8 +55,28 @@ public class Kubernetes {
     Exec exec = new Exec();
     String[] cantDoInlineDecleration = {"sh", "-c  | tar -xvf - -C /starup"};
     Process process = exec.exec("default", podname, cantDoInlineDecleration, true);
-    new FileInputStream(filepath).transferTo(process.getOutputStream());
 
+    Thread in = new Thread(new Runnable() {
+      @Override
+      public void run() {
+        try {
+          ByteStreams.copy(new FileInputStream(filepath), process.getOutputStream());
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    });
+    in.start();
+
+    System.out.println("Starting file copy process");
+    try {
+      process.waitFor();
+      in.join();
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+    System.out.println("Waited for process and thread");
+    System.out.println(process.exitValue());
   }
 
   public static V1Pod initPVCPod(String pvcName, String podname) {
