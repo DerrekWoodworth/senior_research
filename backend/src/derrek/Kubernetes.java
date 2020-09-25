@@ -51,32 +51,8 @@ public class Kubernetes {
   }
 
   public static void copyFileToPVC(String filepath, String pvcName, String podname) throws ApiException, IOException {
-
-    Exec exec = new Exec();
-    String[] cantDoInlineDecleration = {"sh", "-c  | tar -xvf - -C /starup"};
-    Process process = exec.exec("default", podname, cantDoInlineDecleration, true);
-
-    Thread in = new Thread(new Runnable() {
-      @Override
-      public void run() {
-        try {
-          ByteStreams.copy(new FileInputStream(filepath), process.getOutputStream());
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
-      }
-    });
-    in.start();
-
-    System.out.println("Starting file copy process");
-    try {
-      process.waitFor();
-      in.join();
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-    System.out.println("Waited for process and thread");
-    System.out.println(process.exitValue());
+    // Please forgive my egregious code
+    Runtime.getRuntime().exec("cat" + filepath + " | microk8s kubectl exec " + podname + "--stdin -- tar -xvf - -C /startup");
   }
 
   public static V1Pod initPVCPod(String pvcName, String podname) {
