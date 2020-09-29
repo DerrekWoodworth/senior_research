@@ -33,12 +33,16 @@
   (let [size "5Gi"
         initpodname "initpod"]
     ;; Create the PVC todo: Determine the proper size for PVC
+    (println "Creating pvc")
     (Kubernetes/createPVCInCluster (Kubernetes/createPVCSpec scenarioName size))
     ;; Now create an pod that mounts the PVC
+    (println "Creating initpod and mounting pvc")
     (Kubernetes/createInitPod (Kubernetes/initPVCPod scenarioName initpodname))
     ;; Sleep to allow pod to be created
+    (println "Sleeping for the pod to be created")
     (Thread/sleep 4000)
     ;; Copy files from local system to pod
+    (prinln "Copying file to pod")
     (Kubernetes/copyFileToPVC filename initpodname)
     ))
 
