@@ -42,7 +42,7 @@
     (println "Sleeping for the pod to be created")
     (Thread/sleep 4000)
     ;; Copy files from local system to pod
-    (prinln "Copying file to pod")
+    (println "Copying file to pod")
     (Kubernetes/copyFileToPVC filename initpodname)
     ))
 
@@ -52,3 +52,8 @@
   [scenarioname studentname]
   (do
     (Kubernetes/createContainer (Kubernetes/createContainerSpec scenarioname studentname scenarioname))))
+
+(do
+  (createScenario "scenario-4" "/tmp/test.tar")
+  (Thread/sleep 1000)
+  (createContainer "scenario-4" "derrek"))

@@ -116,7 +116,7 @@ public class Kubernetes {
   public static V1Deployment createContainerSpec(String scenario, String student, String pvc) {
     return new V1DeploymentBuilder()
       .withNewMetadata()
-      .withName(scenario + "-" + student + "- deployment")
+      .withName(scenario + "-" + student + "-deployment")
       .endMetadata()
       .withNewSpec()
       .withSelector(
@@ -140,11 +140,7 @@ public class Kubernetes {
       .addNewContainer()
       .withName("scenario-to-container")
       .withImage("ubuntu")
-      .addNewCommand("/bin/bash")
-      .addAllToArgs(List.of(
-        "-c",
-        "/startup/start.sh"
-      ))
+      .addNewCommand("/startup/start.sh")
       .withVolumeMounts(new V1VolumeMountBuilder()
       .withMountPath("/startup")
       .withName("startup-volume")
