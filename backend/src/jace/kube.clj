@@ -11,17 +11,40 @@
 ;  (Kubernetes/createContainerSpec "scenario-2"))
 
 ; Example for creating Scenario
-(Kubernetes/createPVCInCluster (Kubernetes/createPVCSpec "scenario-2" "3Gi"))
+;(Kubernetes/createPVCInCluster (Kubernetes/createPVCSpec "scenario-2" "3Gi"))
 
 ;; Create the init contianer with the name of the pvc
-(println "Creating init pod")
-(println (Kubernetes/createInitPod (Kubernetes/initPVCPod "scenario-2" "initpod")))
+;(println "Creating init pod")
+;(println (Kubernetes/createInitPod (Kubernetes/initPVCPod "scenario-2" "initpod")))
 
 
 ;; These requests are async, need to wait for them to be created (Should watch resource, but will sleep for now)
-(println "Sleeping for 4 seconds")
-(Thread/sleep 4000)
+;(println "Sleeping for 4 seconds")
+;(Thread/sleep 4000)
 
 ;; Now copy the file to the pvc
-(println "Copying file")
-(Kubernetes/copyFileToPVC "/tmp/base64_name.tar" "scenario-2" "initpod")
+;(println "Copying file")
+;(Kubernetes/copyFileToPVC "/tmp/base64_name.tar" "scenario-2" "initpod")
+
+
+(defn createScenario
+  "When the AddScenarino end point is called, create an init pod and copy the file into it"
+  [scenarioName filename]
+  (let [size "5Gi"
+        initpodname "initpod"]
+    ;; Create the PVC todo: Determine the proper size for PVC
+    (Kubernetes/createPVCInCluster (Kubernetes/createPVCSpec scenarioName size))
+    ;; Now create an pod that mounts the PVC
+    (Kubernetes/createInitPod (Kubernetes/initPVCPod scenarioName initpodname))
+    ;; Sleep to allow pod to be created
+    (Thread/sleep 4000)
+    ;; Copy files from local system to pod
+    (Kubernetes/copyFileToPVC filename initpodname)
+    ))
+
+(defn createContainer
+  "When a student wants to attempt a scneario they get their own container. This command launches a container with the scenario
+  mounted, launching its start script"
+  [scenarioname studentname]
+  (do
+    (Kubernetes/createContainer (Kubernetes/createContainerSpec scenarioname studentname scenarioname))))

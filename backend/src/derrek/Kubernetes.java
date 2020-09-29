@@ -3,6 +3,7 @@ package derrek;
 import com.google.common.io.ByteStreams;
 import io.kubernetes.client.Copy;
 import io.kubernetes.client.Exec;
+import io.kubernetes.client.custom.IntOrString;
 import io.kubernetes.client.custom.Quantity;
 import io.kubernetes.client.openapi.ApiClient;
 import io.kubernetes.client.openapi.ApiException;
@@ -53,8 +54,8 @@ public class Kubernetes {
       .build();
   }
 
-  public static void copyFileToPVC(String filepath, String pvcName, String podname) throws ApiException, IOException {
-    // Please forgive my egregious code
+  public static void copyFileToPVC(String filepath, String podname) throws ApiException, IOException {
+    // Please forgive
     String[] cmd = {
 	    "/bin/sh",
 	    "-c",
@@ -98,7 +99,7 @@ public class Kubernetes {
       .withCommand(List.of(
         "/bin/bash",
         "-c",
-        "sleep 10; tar -xvf /downloaded.tar -C /startup; sleep 36000"
+        "sleep 10; tar -xvf /downloaded.tar -C /startup;"
       ))
       .endContainer()
       .endSpec()
@@ -112,20 +113,22 @@ public class Kubernetes {
   /*
     Create a deployment obj for a container from the string pvc
    */
-  public static V1Deployment createContainerSpec(String pvc) {
+  public static V1Deployment createContainerSpec(String scenario, String student, String pvc) {
     return new V1DeploymentBuilder()
       .withNewMetadata()
-      .withName("test-deployment")
+      .withName(scenario + "-" + student + "- deployment")
       .endMetadata()
       .withNewSpec()
       .withSelector(
         new V1LabelSelectorBuilder()
-        .addToMatchLabels("app", "jace")
+        .addToMatchLabels("scenario", scenario)
+        .addToMatchLabels("student", student)
         .build()
       )
       .withNewTemplate()
       .withNewMetadata()
-      .addToLabels("app", "jace")
+      .addToLabels("scenario", scenario)
+      .addToLabels("student", student)
       .endMetadata()
       .withNewSpec()
       .withVolumes(List.of(
@@ -140,17 +143,42 @@ public class Kubernetes {
       .addNewCommand("/bin/bash")
       .addAllToArgs(List.of(
         "-c",
-        "while true; do echo $(date); sleep 10; done"
+        "/startup/start.sh"
       ))
       .withVolumeMounts(new V1VolumeMountBuilder()
       .withMountPath("/startup")
       .withName("startup-volume")
       .withReadOnly(true).build())
+      .addToPorts(new V1ContainerPortBuilder()
+        // Port 80 on the container is to be exposed
+        .withContainerPort(80)
+        .build())
       .endContainer()
       .endSpec()
       .endTemplate()
       .endSpec()
       .build();
+  }
+
+  public static V1Service createServiceSpec(String scenario, String student) {
+    return new V1ServiceBuilder()
+      .withNewMetadata()
+      .withName("Scenario-service-for-container")
+      .endMetadata()
+      .withNewSpec()
+      .withSelector(Map.of("scenario", scenario, "student", student))
+      .addToPorts(new V1ServicePortBuilder()
+        .withProtocol("TCP")
+        .withPort(80)
+        .withTargetPort(new IntOrString(80))
+      .build())
+      .withNewType("NodePort")
+      .endSpec()
+      .build();
+  }
+
+  public static V1Service createServiceInCluster(V1Service service) throws ApiException {
+    return coreV1Api.createNamespacedService("default", service, null, null, null);
   }
 
   public static V1PersistentVolumeClaim createPVCInCluster(V1PersistentVolumeClaim claim) throws ApiException {
