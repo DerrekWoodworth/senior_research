@@ -44,14 +44,16 @@
     ;; Copy files from local system to pod
     (println "Copying file to pod")
     (Kubernetes/copyFileToPVC filename initpodname)
+    ;; Remove sleep to improve performance
+    ;; Just kidding, idk if the above command is asynchronous or not, so sleep anyways to prevent race condition
+    (Thread/sleep 1000)
     ))
 
 (defn createContainer
   "When a student wants to attempt a scneario they get their own container. This command launches a container with the scenario
   mounted, launching its start script"
   [scenarioname studentname]
-  (do
-    (Kubernetes/createContainer (Kubernetes/createContainerSpec scenarioname studentname scenarioname))))
+    (Kubernetes/createContainer (Kubernetes/createContainerSpec scenarioname studentname scenarioname))
 
 (do
   (createScenario "scenario-4" "/tmp/test.tar")

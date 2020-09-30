@@ -15,6 +15,7 @@
             [com.derrek.senior.File.server :as files]
             
             [jace.auth :as auth]
+            [jace.kube :as kube]
             ))
 
 (defn about-page
@@ -53,10 +54,11 @@
 (deftype Creater []
   creater/Service
   (Create
-    [this {{:keys [name]} :grpc-params :as request}]
+    [this {{:keys [scenarioName studentName]} :grpc-params :as request}]
     (println "Creater" request)
+    (kube/createContainer scenarioName studentName)
     {:status 200
-     :body {:value (str "Message from the backend " name)}}))
+     :body {:value (str "Created container of " scenarioName " for " studentName)}}))
 
 (deftype Login []
   login/Service
@@ -72,6 +74,10 @@
     (do
       (println "Scenario" scenario)
       (flush)
+      ;; Add scenario to kubernetes
+      (let [scenarionName (:name scenario)
+            fileName (:initcode scenario)])
+      (kube/createScenario scenarioName fileName)
       {:status 200
        :body {:scenario scenario}})))
 
