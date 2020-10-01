@@ -12,7 +12,7 @@ export class ContainerComponent implements OnInit {
   constructor(private containerService: ContainerService) { }
 
   ngOnInit(): void {
-    this.containerService.createContainer("Changed Test container").subscribe((response) =>{
+    this.containerService.createContainer("Changed Test container", "derrek").subscribe((response) =>{
       this.message = response
     })
   }

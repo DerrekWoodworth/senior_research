@@ -54,11 +54,11 @@
 (deftype Creater []
   creater/Service
   (Create
-    [this {{:keys [scenarioName studentName]} :grpc-params :as request}]
+    [this {{:keys [scenarioname studentname]} :grpc-params :as request}]
     (println "Creater" request)
-    (kube/createContainer scenarioName studentName)
+    (kube/createContainer scenarioname studentname)
     {:status 200
-     :body {:value (str "Created container of " scenarioName " for " studentName)}}))
+     :body {:value (str "Created container of " scenarioname " for " studentname)}}))
 
 (deftype Login []
   login/Service
@@ -75,11 +75,11 @@
       (println "Scenario" scenario)
       (flush)
       ;; Add scenario to kubernetes
-      (let [scenarionName (:name scenario)
-            fileName (:initcode scenario)])
+      (let [scenarioName (:name scenario)
+            fileName (:initcode scenario)]
       (kube/createScenario scenarioName fileName)
       {:status 200
-       :body {:scenario scenario}})))
+       :body {:scenario scenario}}))))
 
 (deftype Upload []
   files/Service
@@ -87,7 +87,7 @@
     [this {{:keys [filename content]} :grpc-params :as request}]
     (do
       ; Append the data to filename
-      (spit filename (String. content) :append true)
+      (spit (str "/tmp/" filename) (String. content) :append true)
       (println "Upload file")
       (flush)
       {:status 200

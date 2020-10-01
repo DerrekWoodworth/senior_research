@@ -22,10 +22,11 @@ export class ContainerService {
     this.client = new CreateServiceClient(environment.url, null, options)
   }
 
-  createContainer(name): Observable<string> {
+  createContainer(scenario, student): Observable<string> {
     return new Observable((observer) => {
       const req = new CreateRequest();
-      req.setName(name)
+      req.setScenarioname(scenario)
+      req.setStudentname(student)
       this.client.create(req, null, (err, response) => {
         console.log("Response from create container")
         console.log(response)

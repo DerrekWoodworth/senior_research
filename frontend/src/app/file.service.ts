@@ -25,7 +25,7 @@ export class FileService {
   uploadFile(file: File) {
     // Chunk file and send it, will need to happen multiple times
     const chunk = new Chunk()
-    chunk.setFilename("base64_name")
+    chunk.setFilename("base64_name.tar")
     const ab = from(file.arrayBuffer())
     ab.subscribe((arrayBuffer) => {
       chunk.setContent(new Uint8Array(arrayBuffer))

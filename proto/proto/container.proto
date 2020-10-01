@@ -2,7 +2,8 @@ syntax = "proto3";
 package com.derrek.senior;
 
 message CreateRequest {
-  string name = 1;
+  string scenarioname= 1;
+  string studentname= 2;
 }
 
 message CreateResponse {

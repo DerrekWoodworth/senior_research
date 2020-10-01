@@ -59,7 +59,7 @@ public class Kubernetes {
     String[] cmd = {
 	    "/bin/sh",
 	    "-c",
-	    "cat " + filepath + " | microk8s kubectl exec " + podname + " --stdin -- tar -xvf - -C /startup"
+	    "cat /tmp/" + filepath + " | microk8s kubectl exec " + podname + " --stdin -- tar -xvf - -C /startup"
     };
 
     Process p = Runtime.getRuntime().exec(cmd);
@@ -99,7 +99,7 @@ public class Kubernetes {
       .withCommand(List.of(
         "/bin/bash",
         "-c",
-        "sleep 10; tar -xvf /downloaded.tar -C /startup;"
+        "sleep 3600"
       ))
       .endContainer()
       .endSpec()

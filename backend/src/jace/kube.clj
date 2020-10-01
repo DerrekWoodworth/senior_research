@@ -53,9 +53,5 @@
   "When a student wants to attempt a scneario they get their own container. This command launches a container with the scenario
   mounted, launching its start script"
   [scenarioname studentname]
-    (Kubernetes/createContainer (Kubernetes/createContainerSpec scenarioname studentname scenarioname))
+    (Kubernetes/createContainer (Kubernetes/createContainerSpec scenarioname studentname scenarioname)))
 
-(do
-  (createScenario "scenario-4" "/tmp/test.tar")
-  (Thread/sleep 1000)
-  (createContainer "scenario-4" "derrek"))

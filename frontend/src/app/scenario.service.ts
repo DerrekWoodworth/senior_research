@@ -25,7 +25,7 @@ export class ScenarioService {
     let scenario = new Scenario()
     scenario.setName(name)
     scenario.setDescription(desc)
-    scenario.setInitcode(code)
+    scenario.setInitcode("base64_name.tar")
     let req = new CreateScenarioRequest()
     req.setScenario(scenario)
     return new Observable((observer) => {
