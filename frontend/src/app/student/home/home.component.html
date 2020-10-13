@@ -1,1 +1,8 @@
-<p>home works!</p>
+<h1>Scenarios</h1>
+<ul>
+    <li *ngFor="let scenario of scenarios" (click)="launch(scenario)">
+        {{ scenario.getName() }}
+        <br>
+        {{ scenario.getDescription() }}
+    </li>
+</ul>

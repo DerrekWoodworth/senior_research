@@ -40,7 +40,7 @@
     (Kubernetes/createInitPod (Kubernetes/initPVCPod scenarioName initpodname))
     ;; Sleep to allow pod to be created
     (println "Sleeping for the pod to be created")
-    (Thread/sleep 4000)
+    (Thread/sleep 10000)
     ;; Copy files from local system to pod
     (println "Copying file to pod")
     (Kubernetes/copyFileToPVC filename initpodname)

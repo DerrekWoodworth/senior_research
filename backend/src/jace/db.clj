@@ -28,6 +28,7 @@
                    :db/valueType :db.type/string
                    :db/cardinality :db.cardinality/one
                    :db/doc "User's password"}])
+;; TODO: Define scenario schema and wrap db
 
 ;; Returns a promise or whatever, needs to be derefrenced
 @(d/transact conn user-schema)

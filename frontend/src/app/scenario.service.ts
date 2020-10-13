@@ -3,7 +3,7 @@ import { ScenariosClient } from './generated/ScenarioServiceClientPb';
 import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 import { AuthInterceptor } from './authinterceptor';
-import { CreateScenarioRequest, CreateScenarioResponse, Scenario } from './generated/scenario_pb'
+import { CreateScenarioRequest, CreateScenarioResponse, ListScenarioRequest, Scenario } from './generated/scenario_pb'
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +34,22 @@ export class ScenarioService {
         console.log(err)
         observer.next(res.getScenario())
       })})
+  }
+
+  listScenarios(): Observable<Scenario[]> {
+    console.log("Listing scenarios")
+    let req = new ListScenarioRequest()
+    req.setSearchterm("Search term for list request")
+
+    return new Observable((observer) => {
+      this.client.list(req, null, (err, res) => {
+        console.log("Got list of scenarios back")
+        console.log("ERR")
+        console.log(err)
+        console.log("RES")
+        console.log(res.getScenarioList() )
+        observer.next(res.getScenarioList())
+      })
+    })
   }
 }

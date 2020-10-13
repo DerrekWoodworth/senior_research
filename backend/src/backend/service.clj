@@ -55,7 +55,8 @@
   creater/Service
   (Create
     [this {{:keys [scenarioname studentname]} :grpc-params :as request}]
-    (println "Creater" request)
+    (println "Creating " scenarioname " for " studentname)
+    (flush)
     (kube/createContainer scenarioname studentname)
     {:status 200
      :body {:value (str "Created container of " scenarioname " for " studentname)}}))
@@ -79,7 +80,15 @@
             fileName (:initcode scenario)]
       (kube/createScenario scenarioName fileName)
       {:status 200
-       :body {:scenario scenario}}))))
+       :body {:scenario scenario}})))
+
+  (List
+    [this {{:keys [searchTerm]} :grpc-params :as request}]
+    (do
+      (println "Search Term" searchTerm)
+      (flush)
+      {:status 200
+       :body {:scenario [{:guid "guid" :name "scenario-15" :description "Description of scenario 15" :initcode "initcode"}]}})))
 
 (deftype Upload []
   files/Service
