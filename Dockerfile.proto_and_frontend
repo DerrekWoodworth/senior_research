@@ -1,0 +1,24 @@
+FROM node as builder
+RUN wget -O protoc-gen-grpc-web "https://github.com/grpc/grpc-web/releases/download/1.2.1/protoc-gen-grpc-web-1.2.1-linux-x86_64"
+RUN mv protoc-gen-grpc-web /usr/local/bin
+RUN chmod +x  /usr/local/bin/protoc-gen-grpc-web
+RUN wget https://github.com/protocolbuffers/protobuf/releases/download/v3.13.0/protoc-3.13.0-linux-x86_64.zip
+RUN unzip protoc-3.13.0-linux-x86_64.zip
+RUN mv bin/protoc /usr/local/bin
+RUN chmod +x /usr/local/bin/protoc
+
+# Copy project over
+COPY . /sr
+WORKDIR /sr/frontend
+RUN mkdir -p src/app/generated
+RUN npm install
+RUN protoc --js_out="import_style=commonjs,binary:src/app/generated" --grpc-web_out="import_style=typescript,mode=grpcwebtext:src/app/generated" --proto_path /sr/proto/proto /sr/proto/proto/*
+
+FROM node
+COPY --from=builder /sr/frontend /frontend
+WORKDIR /frontend
+RUN npm install -g @angular/cli
+
+EXPOSE 4200
+
+CMD ng serve --host 0.0.0.0 --prod
