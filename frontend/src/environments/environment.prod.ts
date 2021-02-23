@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  url: 'http://192.168.1.182:8082'
+  url: 'http://envoy'
 };
