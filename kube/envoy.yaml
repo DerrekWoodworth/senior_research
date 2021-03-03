@@ -17,7 +17,10 @@ spec:
     spec:
       containers:
       - name: envoy
-        image: dwoodworth414/jace:envoy-TAG
+        image: dwoodworth414/jace:envoy-8379dc42b81b4ddab6d3198c57e4b67ef0e9749a
+        env:
+        - name: ENVOY_UID
+          value: "0"
         ports:
         - containerPort: 8082
 
@@ -33,3 +36,4 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 8082
+  type: LoadBalancer

@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: dwoodworth414/jace:backend-TAG
+        image: dwoodworth414/jace:backend-8379dc42b81b4ddab6d3198c57e4b67ef0e9749a
         ports:
         - containerPort: 8080
 ---

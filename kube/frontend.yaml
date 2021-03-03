@@ -17,7 +17,8 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: dwoodworth414/jace:frontend-TAG
+        image: dwoodworth414/jace:frontend-8379dc42b81b4ddab6d3198c57e4b67ef0e9749a
+        command: ["ng", "serve", "--prod", "--disable-host-check", "--host", "0.0.0.0"]
         ports:
         - containerPort: 4200
 ---
@@ -32,4 +33,5 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 4200
+  type: LoadBalancer
 

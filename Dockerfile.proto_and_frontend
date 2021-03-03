@@ -21,5 +21,5 @@ RUN npm install -g @angular/cli
 
 EXPOSE 4200
 
-CMD ng serve --disable-host-check --prod
+CMD ng serve --disable-host-check --prod --host 0.0.0.0
 

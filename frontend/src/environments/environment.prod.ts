@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  url: 'http://envoy'
+  url: 'http://api.derrekwoodworth.com'
 };
