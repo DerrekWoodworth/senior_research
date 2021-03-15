@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: dwoodworth414/jace:frontend-8379dc42b81b4ddab6d3198c57e4b67ef0e9749a
+        image: dwoodworth414/jace:frontend-05c9641726b5f7469d3ef3eae94121568f6a9602
         command: ["ng", "serve", "--prod", "--disable-host-check", "--host", "0.0.0.0"]
         ports:
         - containerPort: 4200
