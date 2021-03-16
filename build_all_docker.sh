@@ -1,9 +1,9 @@
 #!/bin/bash
 HASH=$(git rev-parse HEAD)
 
-docker build -t envoy -f Dockerfile.envoy . &
-docker build -t backend -f Dockerfile.proto_and_backend . &
-docker build -t frontend -f Dockerfile.proto_and_frontend . &
+docker build -t envoy -f Dockerfile.envoy . 
+docker build -t backend -f Dockerfile.proto_and_backend . 
+docker build -t frontend -f Dockerfile.proto_and_frontend . 
 
 # Wait for builds to finish
 wait

@@ -55,7 +55,7 @@ public class Kubernetes {
       .build();
   }
 
-  public static void copyFileToPVC(String filepath, String podname) throws ApiException, IOException {
+  public static void copyFileToPVC(String filepath, String podname) throws IOException {
     String[] cmd = {
 	    "/bin/sh",
 	    "-c",
@@ -106,8 +106,14 @@ public class Kubernetes {
       .build();
   }
 
-  public static V1Pod createInitPod(V1Pod pod) throws ApiException {
-  return coreV1Api.createNamespacedPod("default", pod, null, null, null);
+  public static V1Pod createInitPod(V1Pod pod) {
+    V1Pod pod = null;
+    try {
+      pod = coreV1Api.createNamespacedPod("default", pod, null, null, null);
+    } catch(ApiException e) {
+      System.out.println(e.getResponseBody())
+    }
+    return pod;
   }
 
   /*
@@ -173,15 +179,33 @@ public class Kubernetes {
       .build();
   }
 
-  public static V1Service createServiceInCluster(V1Service service) throws ApiException {
-    return coreV1Api.createNamespacedService("default", service, null, null, null);
+  public static V1Service createServiceInCluster(V1Service service) {
+    V1Service service = null;
+    try {
+      service = coreV1Api.createNamespacedService("default", service, null, null, null);
+    } catch(ApiException e) {
+      System.out.println(e.getResponseBody())
+    }
+    return service;
   }
 
-  public static V1PersistentVolumeClaim createPVCInCluster(V1PersistentVolumeClaim claim) throws ApiException {
-    return coreV1Api.createNamespacedPersistentVolumeClaim("default", claim, null,null,null);
+  public static V1PersistentVolumeClaim createPVCInCluster(V1PersistentVolumeClaim claim) {
+    V1PersistentVolumeClaim pvc = null;
+    try {
+      pvc =  coreV1Api.createNamespacedPersistentVolumeClaim("default", claim, null,null,null);
+    } catch(ApiException e) {
+      System.out.println(e.getResponseBody())
+    }
+    return pvc;
   }
 
-  public static V1Deployment createContainer(V1Deployment deployment) throws ApiException {
-    return appsV1Api.createNamespacedDeployment("default", deployment, null, null, null);
+  public static V1Deployment createContainer(V1Deployment deployment) {
+    V1Deployment deployment = null;
+    try {
+      deployment = appsV1Api.createNamespacedDeployment("default", deployment, null, null, null);
+    } catch(ApiException e) {
+      System.out.println(e.getResponseBody())
+    }
+    return deployment;
   }
 }
