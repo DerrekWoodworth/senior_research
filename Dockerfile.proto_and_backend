@@ -16,6 +16,11 @@ RUN protoc --clojure_out=grpc-server:/sr/backend/src --proto_path=/sr/proto /sr/
 FROM clojure:lein
 COPY --from=builder /sr/backend /backend
 
+# Install kuebctl for manual copy command
+RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+RUN chmod +x kubectl
+RUN mv kubectl /usr/local/bin
+
 # cd into the backend
 WORKDIR /backend
 CMD lein run

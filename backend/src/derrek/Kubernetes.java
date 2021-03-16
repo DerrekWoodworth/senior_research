@@ -12,6 +12,7 @@ import io.kubernetes.client.openapi.apis.AppsV1Api;
 import io.kubernetes.client.openapi.apis.CoreV1Api;
 import io.kubernetes.client.openapi.models.*;
 import io.kubernetes.client.util.Config;
+import io.kubernetes.client.util.ClientBuilder;
 
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
@@ -34,7 +35,7 @@ public class Kubernetes {
   private static Copy copy;
 
   public static void setApis() throws IOException, ApiException {
-    Configuration.setDefaultApiClient(Config.defaultClient().setDebugging(true));
+    Configuration.setDefaultApiClient(ClientBuilder.cluster().build());
     coreV1Api = new CoreV1Api();
     appsV1Api = new AppsV1Api();
     copy = new Copy();
@@ -55,11 +56,10 @@ public class Kubernetes {
   }
 
   public static void copyFileToPVC(String filepath, String podname) throws ApiException, IOException {
-    // Please forgive
     String[] cmd = {
 	    "/bin/sh",
 	    "-c",
-	    "cat /tmp/" + filepath + " | microk8s kubectl exec " + podname + " --stdin -- tar -xvf - -C /startup"
+	    "cat /tmp/" + filepath + " | kubectl exec " + podname + " --stdin -- tar -xvf - -C /startup"
     };
 
     Process p = Runtime.getRuntime().exec(cmd);
