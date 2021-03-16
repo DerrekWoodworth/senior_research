@@ -107,13 +107,13 @@ public class Kubernetes {
   }
 
   public static V1Pod createInitPod(V1Pod pod) {
-    V1Pod pod = null;
+    V1Pod returnPod = null;
     try {
-      pod = coreV1Api.createNamespacedPod("default", pod, null, null, null);
+      returnPod = coreV1Api.createNamespacedPod("default", pod, null, null, null);
     } catch(ApiException e) {
-      System.out.println(e.getResponseBody())
+      System.out.println(e.getResponseBody());
     }
-    return pod;
+    return returnPod;
   }
 
   /*
@@ -180,13 +180,13 @@ public class Kubernetes {
   }
 
   public static V1Service createServiceInCluster(V1Service service) {
-    V1Service service = null;
+    V1Service returnService = null;
     try {
-      service = coreV1Api.createNamespacedService("default", service, null, null, null);
+      returnService = coreV1Api.createNamespacedService("default", service, null, null, null);
     } catch(ApiException e) {
-      System.out.println(e.getResponseBody())
+      System.out.println(e.getResponseBody());
     }
-    return service;
+    return returnService;
   }
 
   public static V1PersistentVolumeClaim createPVCInCluster(V1PersistentVolumeClaim claim) {
@@ -194,18 +194,18 @@ public class Kubernetes {
     try {
       pvc =  coreV1Api.createNamespacedPersistentVolumeClaim("default", claim, null,null,null);
     } catch(ApiException e) {
-      System.out.println(e.getResponseBody())
+      System.out.println(e.getResponseBody());
     }
     return pvc;
   }
 
   public static V1Deployment createContainer(V1Deployment deployment) {
-    V1Deployment deployment = null;
+    V1Deployment returnDeployment = null;
     try {
-      deployment = appsV1Api.createNamespacedDeployment("default", deployment, null, null, null);
+      returnDeployment = appsV1Api.createNamespacedDeployment("default", deployment, null, null, null);
     } catch(ApiException e) {
-      System.out.println(e.getResponseBody())
+      System.out.println(e.getResponseBody());
     }
-    return deployment;
+    return returnDeployment;
   }
 }

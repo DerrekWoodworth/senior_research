@@ -18,7 +18,7 @@ spec:
       serviceAccountName: jace
       containers:
       - name: backend
-        image: dwoodworth414/jace:backend-796828356f57b91598eedcc1c2b370f6172beccc
+        image: dwoodworth414/jace:backend-6
         ports:
         - containerPort: 8080
 ---

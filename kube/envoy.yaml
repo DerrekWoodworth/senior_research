@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: envoy
-        image: dwoodworth414/jace:envoy-796828356f57b91598eedcc1c2b370f6172beccc
+        image: dwoodworth414/jace:envoy-72acc8b87d279ac79dbde8f9131743502be553d3
         env:
         - name: ENVOY_UID
           value: "0"
