@@ -88,7 +88,7 @@
       (println "Search Term" searchTerm)
       (flush)
       {:status 200
-       :body {:scenario [{:guid "guid" :name "scenario-15" :description "Description of scenario 15" :initcode "initcode"}]}})))
+       :body {:scenario [{:guid "guid" :name "scenario1" :description "Test Python http server" :initcode "initcode"}]}})))
 
 (deftype Upload []
   files/Service
