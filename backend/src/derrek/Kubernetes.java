@@ -52,7 +52,6 @@ public class Kubernetes {
       .withRequests(Map.of("storage", new Quantity(size)))
       .withLimits(Map.of("storage", new Quantity(size)))
       .endResources()
-      .addNewAccessMode("ReadOnlyMany")
       .endSpec()
       .build();
   }
