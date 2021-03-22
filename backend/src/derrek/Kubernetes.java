@@ -46,6 +46,8 @@ public class Kubernetes {
       .withName(name)
       .endMetadata()
       .withNewSpec()
+      .withNewStorageClassName("efs-sc")
+      .withAccessModes("ReadWriteMany")
       .withNewResources()
       .withRequests(Map.of("storage", new Quantity(size)))
       .withLimits(Map.of("storage", new Quantity(size)))
