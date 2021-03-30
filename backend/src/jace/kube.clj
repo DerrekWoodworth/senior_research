@@ -30,7 +30,7 @@
 (defn createScenario
   "When the AddScenarino end point is called, create an init pod and copy the file into it"
   [scenarioName filename]
-  (let [size "5Gi"
+  (let [size "1Gi"
         initpodname "initpod"]
     ;; Create the PVC todo: Determine the proper size for PVC
     (println "Creating pvc")

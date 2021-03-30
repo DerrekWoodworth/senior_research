@@ -1,8 +1,9 @@
 <h1>Scenarios</h1>
 <ul>
-    <li *ngFor="let scenario of scenarios" (click)="launch(scenario)">
+    <li *ngFor="let scenario of scenarios">
         {{ scenario.getName() }}
         <br>
         {{ scenario.getDescription() }}
+        <button (click)="launch(scenario)">Launch {{ scenario.getName() }}</button>
     </li>
 </ul>
