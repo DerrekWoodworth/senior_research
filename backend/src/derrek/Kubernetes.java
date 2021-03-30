@@ -175,7 +175,7 @@ public class Kubernetes {
         .withPort(80)
         .withTargetPort(new IntOrString(80))
       .build())
-      .withNewType("NodePort")
+      .withNewType("LoadBalancer")
       .endSpec()
       .build();
   }

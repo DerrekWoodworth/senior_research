@@ -53,5 +53,6 @@
   "When a student wants to attempt a scneario they get their own container. This command launches a container with the scenario
   mounted, launching its start script"
   [scenarioname studentname]
-    (Kubernetes/createContainer (Kubernetes/createContainerSpec scenarioname studentname scenarioname)))
+    (Kubernetes/createContainer (Kubernetes/createContainerSpec scenarioname studentname scenarioname))
+    Kubernetes/createServiceInCluster (Kubernetes/createServiceSpec scenarioname studentname))
 
