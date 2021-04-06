@@ -28,21 +28,8 @@
   [request]
   (ring-resp/response "Hello from backend, backed by Protojure Template!"))
 
-;; -- PROTOC-GEN-CLOJURE --
-;; Implement our "Greeter" service interface.  The compiler generates
-;; a defprotocol (greeter/Service, in this case), and it is our job
-;; to define an implementation of every function within it.  These will be
-;; invoked whenever a request arrives, similarly to if we had defined
-;; these functions as pedestal defhandlers.  The main difference is that
-;; the :body returned in the response should correlate to the protobuf
-;; return-type declared in the Service definition within the .proto
-;;
-;; Note that our GRPC parameters are associated with the request-map
-;; as :grpc-params, similar to how the pedestal body-param module
-;; injects other types, like :json-params, :edn-params, etc.
-;;
-;; see http://pedestal.io/reference/request-map
 
+(def scenariosAtom (atom (list (hash-map))))
 
 (deftype Greeter []
   greeter/Service
@@ -77,7 +64,9 @@
       (flush)
       ;; Add scenario to kubernetes
       (let [scenarioName (:name scenario)
-            fileName (:initcode scenario)]
+            fileName (:initcode scenario)
+            description (:description scenario)]
+        (reset! scenariosAtom (conj @scenariosAtom (hash-map :guid (str (count @scenariosAtom)) :name scenarioName :description description)))
       (kube/createScenario scenarioName fileName)
       {:status 200
        :body {:scenario scenario}})))
@@ -88,7 +77,7 @@
       (println "Search Term" searchTerm)
       (flush)
       {:status 200
-       :body {:scenario [{:guid "guid" :name "scenario1" :description "Test Python http server" :initcode "initcode"}]}})))
+       :body {:scenario @scenariosAtom}})))
 
 (deftype Upload []
   files/Service

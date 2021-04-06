@@ -1,5 +1,6 @@
 #!/bin/bash
 HASH=$(git rev-parse HEAD)
+#HASH=9
 
 docker build -t envoy -f Dockerfile.envoy . 
 docker build -t backend -f Dockerfile.proto_and_backend . 
@@ -19,5 +20,5 @@ docker push dwoodworth414/jace:backend-$HASH
 docker push dwoodworth414/jace:frontend-$HASH
 
 echo Updating kubernetes pods to refrence latest version...
-sed --regexp-extended 's/(^.*image.*-)(.*)/\1'"$HASH"'/' -i kube/frontend.yaml kube/backend.yaml kube/envoy.yaml
+sed --regexp-extended 's/(^.*image.*-)(.*)/\1'"$HASH"'/' -i kube/backend.yaml kube/frontend.yaml kube/backend.yaml kube/envoy.yaml
 
