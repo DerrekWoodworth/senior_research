@@ -1,13 +1,11 @@
 #!/bin/bash
 HASH=$(git rev-parse HEAD)
-#HASH=9
 
+# Build each docker container with their respective Dockerfiles
 docker build -t envoy -f Dockerfile.envoy . 
 docker build -t backend -f Dockerfile.proto_and_backend . 
 docker build -t frontend -f Dockerfile.proto_and_frontend . 
 
-# Wait for builds to finish
-wait
 
 # Tag all the images for remote repo
 docker tag envoy dwoodworth414/jace:envoy-$HASH
