@@ -10,52 +10,12 @@ terraform {
       source  = "hashicorp/kubernetes"
       version = "1.13.3"
     }
-#    helm = {
-#      source  = "hashicorp/helm"
-#      version = "2.0.2"
-#    }
-#    template = {
-#      source  = "hashicorp/template"
-#      version = "2.2.0"
-#    }
-#    local = {
-#      source  = "hashicorp/local"
-#      version = "2.0.0"
-#    }
-#    kubernetes-alpha = {
-#      source  = "hashicorp/kubernetes-alpha"
-#      version = "0.2.1"
-#    }
   }
 }
 
 provider "aws" {
   region = "us-east-2"
-}
-
-#provider "kubernetes" {
-#  host                   = data.aws_eks_cluster.cluster.endpoint
-#  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
-#  token                  = data.aws_eks_cluster_auth.cluster.token
-#  load_config_file       = false
-#}
-#
-#provider "helm" {
-#  debug = true
-#  kubernetes {
-#    host                   = data.aws_eks_cluster.cluster.endpoint
-#    cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
-#    token                  = data.aws_eks_cluster_auth.cluster.token
-#  }
-#}
-#
-#provider "kubernetes-alpha" {
-#  host                   = data.aws_eks_cluster.cluster.endpoint
-#  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
-#  token                  = data.aws_eks_cluster_auth.cluster.token
-#  server_side_planning   = false
-#}
-
+  }
 
 data "aws_eks_cluster" "cluster" {
   name = module.jace.cluster_id
